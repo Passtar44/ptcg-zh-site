@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>卡组印坊 · 简中 PTCG</title>
+  <link rel="stylesheet" href="./style.css?v=3">
+  <script src="./vendor/pdf-lib.min.js" defer></script>
+  <script src="./app.js?v=5" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="./">卡组印坊<span>PTCG 简中</span></a><span id="mode-badge" class="local-badge">本地预览版</span></header>
+  <main>
+    <div class="intro"><p class="eyebrow">把想玩的卡组，变成手里的纸牌</p><h1>导入卡组，直接打印。</h1><p class="lead">匹配简中原版卡图，按数量排成 A4。下载 PDF，就能开始打印。</p></div>
+    <div id="protocol-warning" class="protocol-warning" hidden><strong>请从本地网站打开此页面</strong><span>先运行 <code>python3 scripts/server.py</code>，再访问 <a href="http://127.0.0.1:8765">http://127.0.0.1:8765</a>。</span></div>
+    <div class="workspace">
+      <section class="panel import-panel" aria-labelledby="import-title">
+        <div class="section-heading"><span class="step">01</span><h2 id="import-title">导入卡组</h2></div>
+        <p class="muted">优先粘贴集换社分享链接，直接读取该卡组选定的简中卡图。</p>
+        <div class="share-import">
+          <label for="deck-link">集换社分享链接</label>
+          <input id="deck-link" type="url" inputmode="url" spellcheck="false" placeholder="https://www.jihuanshe.com/app/userCardSet?...">
+          <button id="import-link" class="primary" type="button">读取集换社卡组 <span aria-hidden="true">→</span></button>
+          <p id="share-status" class="status" aria-live="polite">在集换社选择「分享卡组」后复制链接。</p>
+        </div>
+        <div class="source-divider"><span>或导入卡组清单</span></div>
+        <label for="deck-text">卡组清单</label>
+        <textarea id="deck-text" rows="10" spellcheck="false" placeholder="4 皮卡丘 151c 025&#10;4 妙蛙种子 csve2c 001&#10;1 花舞鸟 csjc 001"></textarea>
+        <div class="import-actions"><label class="file-button" for="deck-file">选择文件</label><input id="deck-file" type="file" accept=".txt,.csv,text/plain,text/csv"><button id="sample" class="text-button" type="button">试用示例</button></div>
+        <details><summary>支持的清单格式</summary><p>每行填写「数量 卡名 系列 编号」，如 <code>4 皮卡丘 151c 025</code>。也支持 <code>皮卡丘 151c 025 ×4</code>。</p><p>只写卡名也能检索，之后需要选定版本。CSV 表头使用「数量,卡名,系列,编号」。集换社导出的清单可先粘贴试试，未识别的行会保留并提示。</p></details>
+        <button id="resolve" class="secondary-wide" type="button">匹配清单中的简中卡图 <span aria-hidden="true">→</span></button>
+        <p id="import-status" class="status" aria-live="polite">先试用示例，看看卡图和排版。</p>
+      </section>
+      <section class="panel result-panel" aria-labelledby="cards-title">
+        <div class="section-heading"><span class="step">02</span><h2 id="cards-title">确认卡牌</h2><span id="card-summary" class="count-badge">等待导入</span></div>
+        <p id="deck-context" class="muted">核对卡面和数量，有多个版本时请选择对应卡图。</p>
+        <div id="cards" class="cards"><div class="empty"><div class="empty-cards" aria-hidden="true"><span></span><span></span><span></span></div><h3>你的卡组会出现在这里</h3><p>我们会按系列和编号查找简中卡图。</p></div></div>
+      </section>
+    </div>
+    <section class="panel print-panel" aria-labelledby="print-title">
+      <div class="section-heading"><span class="step">03</span><h2 id="print-title">生成打印 PDF</h2></div>
+      <div class="print-content"><div class="paper-icon" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="print-description"><h3>A4 · 每页 9 张 · 自动分页</h3><p>默认卡图 63 × 88 mm，间距 2 mm。附 50 mm 校准尺。</p><div class="settings"><label>宽 <input id="card-width" type="number" value="63" min="60" max="64" step="0.1"> mm</label><label>高 <input id="card-height" type="number" value="88" min="85" max="89" step="0.1"> mm</label><label class="check"><input id="crop-marks" type="checkbox" checked> 裁切标记</label></div><p class="print-tip">打印时选择「实际大小 / 100%」，关闭「适合页面」。先量一下校准尺，再批量打印。</p></div><div class="export"><p id="page-summary">确认卡牌后即可生成</p><button id="download" class="primary" disabled>下载打印 PDF <span aria-hidden="true">↓</span></button><button id="export-deck" class="text-button" disabled>下载卡组清单</button><p id="export-status" class="status" aria-live="polite"></p></div></div>
+    </section>
+    <footer>支持集换社分享卡组与 PikaQian 卡牌清单 · 卡组只用于本次本地生成</footer>
+  </main>
+</body>
+</html>

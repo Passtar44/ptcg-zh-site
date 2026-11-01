@@ -272,7 +272,7 @@ async function embedNetworkImage(pdf, url) {
   return pdf.embedPng(png);
 }
 
-async function createBrowserPdf(entries, widthMm, heightMm, cropMarks) {
+async function createBrowserPdf(entries, widthMm, heightMm, gapMm, cropMarks) {
   if (!window.PDFLib) throw new Error("PDF 生成库没有加载，请刷新页面重试。");
   const {PDFDocument, rgb} = window.PDFLib;
   const expanded = [];
@@ -295,7 +295,7 @@ async function createBrowserPdf(entries, widthMm, heightMm, cropMarks) {
   const pageHeight = 297 * mm;
   const cardWidth = widthMm * mm;
   const cardHeight = heightMm * mm;
-  const gap = 2 * mm;
+  const gap = gapMm * mm;
   const left = (pageWidth - cardWidth * 3 - gap * 2) / 2;
   const bottom = (pageHeight - cardHeight * 3 - gap * 2) / 2;
   const pages = Math.ceil(expanded.length / 9);
@@ -433,8 +433,9 @@ $("#download").addEventListener("click", async () => {
   if (busy) return;
   const width = Number($("#card-width").value);
   const height = Number($("#card-height").value);
-  if (width < 60 || width > 64 || height < 85 || height > 89) {
-    setStatus("#export-status", "宽度须为 60—64 mm，高度须为 85—89 mm。", true);
+  const gap = Number($("#card-gap").value);
+  if (width < 60 || width > 64 || height < 85 || height > 89 || gap < 0 || gap > 4) {
+    setStatus("#export-status", "宽度须为 60—64 mm，高度须为 85—89 mm，间距须为 0—4 mm。", true);
     return;
   }
   busy = true;
@@ -443,10 +444,10 @@ $("#download").addEventListener("click", async () => {
   try {
     const entries = selected();
     const blob = staticMode
-      ? await createBrowserPdf(entries, width, height, $("#crop-marks").checked)
+      ? await createBrowserPdf(entries, width, height, gap, $("#crop-marks").checked)
       : await (await request("/api/pdf", {
         entries,
-        options: {width_mm: width, height_mm: height, crop_marks: $("#crop-marks").checked},
+        options: {width_mm: width, height_mm: height, gap_mm: gap, crop_marks: $("#crop-marks").checked},
       })).blob();
     const name = pdfFileName();
     download(blob, name);

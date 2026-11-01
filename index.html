@@ -6,7 +6,7 @@
   <title>卡组印坊 · 简中 PTCG</title>
   <link rel="stylesheet" href="./style.css?v=3">
   <script src="./vendor/pdf-lib.min.js" defer></script>
-  <script src="./app.js?v=5" defer></script>
+  <script src="./app.js?v=6" defer></script>
 </head>
 <body>
   <header class="topbar"><a class="brand" href="./">卡组印坊<span>PTCG 简中</span></a><span id="mode-badge" class="local-badge">本地预览版</span></header>
@@ -39,7 +39,7 @@
     </div>
     <section class="panel print-panel" aria-labelledby="print-title">
       <div class="section-heading"><span class="step">03</span><h2 id="print-title">生成打印 PDF</h2></div>
-      <div class="print-content"><div class="paper-icon" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="print-description"><h3>A4 · 每页 9 张 · 自动分页</h3><p>默认卡图 63 × 88 mm，间距 2 mm。附 50 mm 校准尺。</p><div class="settings"><label>宽 <input id="card-width" type="number" value="63" min="60" max="64" step="0.1"> mm</label><label>高 <input id="card-height" type="number" value="88" min="85" max="89" step="0.1"> mm</label><label class="check"><input id="crop-marks" type="checkbox" checked> 裁切标记</label></div><p class="print-tip">打印时选择「实际大小 / 100%」，关闭「适合页面」。先量一下校准尺，再批量打印。</p></div><div class="export"><p id="page-summary">确认卡牌后即可生成</p><button id="download" class="primary" disabled>下载打印 PDF <span aria-hidden="true">↓</span></button><button id="export-deck" class="text-button" disabled>下载卡组清单</button><p id="export-status" class="status" aria-live="polite"></p></div></div>
+      <div class="print-content"><div class="paper-icon" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><div class="print-description"><h3>A4 · 每页 9 张 · 自动分页</h3><p>默认卡图 63 × 88 mm，间距 1 mm，可单线裁开。附 50 mm 校准尺。</p><div class="settings"><label>宽 <input id="card-width" type="number" value="63" min="60" max="64" step="0.1"> mm</label><label>高 <input id="card-height" type="number" value="88" min="85" max="89" step="0.1"> mm</label><label>间距 <input id="card-gap" type="number" value="1" min="0" max="4" step="0.1"> mm</label><label class="check"><input id="crop-marks" type="checkbox" checked> 裁切标记</label></div><p class="print-tip">打印时选择「实际大小 / 100%」，关闭「适合页面」。先量一下校准尺，再批量打印。</p></div><div class="export"><p id="page-summary">确认卡牌后即可生成</p><button id="download" class="primary" disabled>下载打印 PDF <span aria-hidden="true">↓</span></button><button id="export-deck" class="text-button" disabled>下载卡组清单</button><p id="export-status" class="status" aria-live="polite"></p></div></div>
     </section>
     <footer>支持集换社分享卡组与 PikaQian 卡牌清单 · 卡组只用于本次本地生成</footer>
   </main>
